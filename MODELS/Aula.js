@@ -10,7 +10,7 @@ const Aula = mongoose.model("Aula", {
     idDisciplina: Disciplina.id,
     observacoes: String,
     Inicio: String,
-    Fim: String
+    qtdAulas: Number
 })
 
 module.exports = Aula

@@ -35,3 +35,10 @@ app.post("/novo/aluno", Aluno.novoAluno)
 app.post("/aluno/login", Aluno.login)
 app.path("/aluno/altera-email/:id", Aluno.alterarEmail)
 app.path("/aluno/altera-snha/:id", Aluno.alterarEmail)
+
+//FUNCIONALIDADES DOS ALUNOS
+
+const Professor = require("./CONTROLLERS/ProfessorController")
+app.post("/professor/novo", Professor.novoProfessor)
+app.post("/professor/login", Professor.loginProfessor)
+app.post("/professor/:id/nova-aula", Professor.marcarAula)
