@@ -130,7 +130,7 @@ const alterarEmail = async (req, res) => {
 
     if (!validaEmail) {
         return res.status(404).json({
-            Mensagem: "Nenhum email encontrado!"
+            Mensagem: "Email incorreto!"
         })
     } else {
         try {
@@ -151,9 +151,70 @@ const alterarEmail = async (req, res) => {
     }
 }
 
+const alteraTelefone = async (req, res)=>{
+    const id = req.params.id
+
+    const buscaUsuario = await User.findById(id, '-senha')
+
+    if (!buscaUsuario) {
+        return res.status(404).json({
+            MENSAGEM: "Usuário não encontrado!"
+        })
+    }
+
+    const { telefoneAntigo, TelefoneNovo } = req.body
+
+    const validaTelefone = await Aluno.findOne({
+        telefone: telefoneAntigo
+    })
+
+    if (!validaTelefone) {
+        return res.status(404).json({
+            Mensagem: "Telefone incorreto!"
+        })
+    } else {
+        try {
+            const novoTelefone = await Aluno.updateOne({
+                id: validaTelefone.id
+            }, { $set: { telefone: TelefoneNovo } })
+
+            return res.status(200).json({
+                Mensagem: "Telefone alterado com sucesso!",
+                telefone: novoTelefone
+            })
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json({
+                Mensagem: "Erro no sistema!"
+            })
+        }
+    }
+}
+
+const exlcuiConta = async(req, res)=>{
+    const id = req.params.id
+
+    const buscaUsuario = await User.findById(id, '-senha')
+
+    if (!buscaUsuario) {
+        return res.status(404).json({
+            MENSAGEM: "Usuário não encontrado!"
+        })
+    }else{
+        try{
+            await Aluno.delete
+        }catch(error){
+            return res.status(500).json({
+                Mensagem: "Erro no sistema!"
+            })
+        }
+    }
+}
+
 module.exports = {
     novoAluno,
     login,
     listarAlunos,
-    alterarEmail
+    alterarEmail,
+    alteraTelefone
 }

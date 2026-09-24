@@ -6,20 +6,21 @@ const jwt = require("jsonwebtoken")
 const novoProfessor = async (req, res)=>{
     const {
         nome,
-        dataNascimento,
         telefone,
+        valorHora,
+        disciplina,
         email,
         senha,
         repitaSenha
     } = req.body
 
-    if(!nome || !dataNascimento || !telefone || !email || !senha || !repitaSenha){
+    if(!nome || !valorHora || !telefone || !email || !senha || !repitaSenha || !disciplina){
         return res.status(400).json({
             Mensagem: "Todos os campos são obrigatórios!"
         })
     }
 
-    const validaEmail = await Aluno.find({email:email})
+    const validaEmail = await Professor.find({email:email})
 
     if(validaEmail){
         return res.status(400).json({
@@ -36,19 +37,20 @@ const novoProfessor = async (req, res)=>{
     const salt = bcrypt.genSalt(15)
     const senhaHash = await bcrypt.hash(senha, salt)
 
-    const NovoAluno = new Aluno({
+    const novoProfessor = new Professor({
         nome,
-        dataNascimento,
         telefone,
+        valorHora,
+        disciplina,
         email,
-        senha: senhaHash
+        senha: senhaHash,
     })
 
     try{
-        await NovoAluno.save()
+        await novoProfessor.save()
 
         return res.status(201).json({
-            Sucesso: NovoAluno
+            Sucesso: novoProfessor
         })
 
     }catch(error){
@@ -68,7 +70,7 @@ const loginProfessor = async(req, res)=>{
         })
     }
 
-    const validausuario = await Aluno.findOne({
+    const validausuario = await Professor.findOne({
         email: email
     })
     const validasenha = await bcrypt.compare(senha, validausuario.senha)
@@ -83,7 +85,7 @@ const loginProfessor = async(req, res)=>{
         const secret = process.env.SECRET
 
         const token = jwt.sign({
-            id: Aluno.id
+            id: validausuario.id
         }, secret)
 
         return res.status(200).json({
