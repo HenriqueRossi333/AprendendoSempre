@@ -1,6 +1,6 @@
-const { MongoClient } = require("mongodb");
+const mongoose = require("mongoose")
 
-const Disciplina = MongoClient.model("Disciplina", {
+const Disciplina = mongoose.model("Disciplina", {
     id: id,
     nome: String,
     descricao: String,

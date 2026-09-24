@@ -1,9 +1,9 @@
-const { MongoClient } = require("mongodb");
+const mongoose = require("mongoose")
 const Professor = require("./Professor")
 const Aluno = require("./Alunos")
 const Disciplina = require("./Disciplina")
 
-const Aula = MongoClient.model("Aula", {
+const Aula = mongoose.model("Aula", {
     id: id,
     idProfessor: Professor.id,
     idAluno: Aluno.id,

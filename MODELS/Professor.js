@@ -1,7 +1,7 @@
-const { MongoClient } = require("mongodb");
+const mongoose = require("mongoose")
 
-const Professor = MongoClient.model("Professor", {
-    id: id,
+const Professor = mongoose.model("Professor", {
+    id: Number,
     nome: String,
     telefone: Number,
     disciplina: String,
