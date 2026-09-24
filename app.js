@@ -27,3 +27,9 @@ client.connect()
         console.log("Não foi possível conectar ao banco!");
         console.log(error);
     });
+
+//FUNCIONALIDADES DOS ALUNOS
+
+const Aluno = require("./CONTROLLERS/AlunoController")
+app.post("/novo/aluno", Aluno.novoAluno)
+app.post("/aluno/login", Aluno.login)
